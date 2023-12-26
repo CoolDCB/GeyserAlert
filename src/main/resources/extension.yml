@@ -1,6 +1,7 @@
-id: exampleid
-name: ExampleExtension
-main: org.geyser.extension.exampleid.ExampleExtension
+id: geyseralert
+name: GeyserAlert
+main: me.dave.geyseralert.GeyserAlert
 api: 1.0.0
 version: 1.0.0
-authors: [ExampleAuthor]
+authors:
+  - Dav_e_
