@@ -31,3 +31,7 @@ dependencies {
     // Include other dependencies here - e.g. for configuration.
 //    implementation 'com.github.CoolDCB:ChatColorHandler:v2.5.0'
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

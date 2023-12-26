@@ -14,11 +14,8 @@ public class GeyserAlert implements Extension {
 
     @Subscribe
     public void onDefineCommands(GeyserDefineCommandsEvent event) {
-        this.logger().info("Event triggered successfully");
-
         Command command = Command.builder(this)
             .name("alert")
-//            .bedrockOnly(true)
             .source(CommandSource.class)
             .aliases(List.of("alert"))
             .description("Send an alert to all online Bedrock players")
@@ -26,16 +23,25 @@ public class GeyserAlert implements Extension {
             .suggestedOpOnly(true)
             .permission("geyseralert.alert")
             .executor((source, cmd, args) -> {
+                if (!source.hasPermission("geyseralert.alert")) {
+                    source.sendMessage("You don't have permission for this command");
+                    return;
+                }
+
                 if (args.length < 1) {
                     source.sendMessage("Make sure to include the message you want to send");
                     return;
                 }
 
+                String alert = String.join(" ", args).replace("&", "§");
+
                 Geyser.api().onlineConnections().forEach(connection -> {
                     if (connection instanceof GeyserConnection geyserConnection) {
-                        geyserConnection.sendMessage(String.join(" ", args).replace("&", "§"));
+                        geyserConnection.sendMessage(alert);
                     }
                 });
+
+                this.logger().info("Sent alert: '" + alert + "'");
             })
             .build();
 
